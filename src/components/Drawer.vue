@@ -1,18 +1,3 @@
-<script setup>
-import DrawerHead from './DrawerHead.vue'
-import CartItemList from './CartItemList.vue'
-import InfoBlock from './InfoBlock.vue'
-const emit = defineEmits(['closeDrawer', 'createOrders'])
-
-defineProps({
-  totalPrice: Number,
-  vatPrice: Number,
-  isDisabledButtonCart: Boolean,
-  openDrawer: Boolean,
-  orderId: Number
-})
-</script>
-
 <template>
   <div
     @click="emit('closeDrawer')"
@@ -56,7 +41,7 @@ defineProps({
     </div>
     <button
       v-if="totalPrice"
-      @click="emit('createOrders')"
+      @click="emit('createOrders')" 
       class="bg-lime-500 w-full text-white p-4 rounded-xl hover:bg-lime-600 transition disabled:bg-slate-300"
       type="button"
       :disabled="totalPrice === 0 || isDisabledButtonCart"
@@ -65,3 +50,18 @@ defineProps({
     </button>
   </div>
 </template>
+
+<script setup>
+import DrawerHead from './DrawerHead.vue'
+import CartItemList from './CartItemList.vue'
+import InfoBlock from './InfoBlock.vue'
+const emit = defineEmits(['closeDrawer', 'createOrders'])
+
+defineProps({
+  totalPrice: Number,
+  vatPrice: Number,
+  isDisabledButtonCart: Boolean,
+  openDrawer: Boolean,
+  orderId: Number
+})
+</script>

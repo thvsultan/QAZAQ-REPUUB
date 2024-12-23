@@ -41,7 +41,7 @@ const addToFavorites = async (item) => {
       item.favoriteId = data.id
     } else {
       item.isFavorite = !item.isFavorite
-      await axios.delete(`/https://cdfdd4035ec5d396.mokky.dev/favorites/${item.favoriteId}`)
+      await axios.delete(`https://cdfdd4035ec5d396.mokky.dev/favorites/${item.favoriteId}`)
       item.favoriteId = null
     }
   } catch (error) {
@@ -82,7 +82,7 @@ const createOrders = async () => {
     const { data } = await axios.post('https://cdfdd4035ec5d396.mokky.dev/order', {
       items: cart.value,
       total: totalPrice.value,
-      createdAt: new Date()
+      createdAt: new Date().toISOString()  // Используем ISO формат для даты
     })
 
     cart.value = []
@@ -96,7 +96,7 @@ const createOrders = async () => {
       isAdded: false
     }))
 
-    orderId.value = data.id
+    orderId.value = data.id  // Сохраняем ID заказа
 
     localStorage.removeItem('cart')
   } catch (error) {
@@ -130,7 +130,7 @@ provide('favorites', favorites)
   <Drawer
     v-if="drawerOpen"
     @close-drawer="closeDrawer"
-    @create-orders="createOrders"
+    @create-orders="createOrders"   
     :total-price="totalPrice"
     :vat-price="vatPrice"
     :is-disabled-button-cart="isDisabledButtonCart"
@@ -139,6 +139,7 @@ provide('favorites', favorites)
   />
   <div class="w-4/5 mx-auto bg-white rounded-xl shadow-xl mt-14 mb-14">
     <Header :total="totalPrice" @open-drawer="openDrawer" />
+
     <main class="p-10">
       <router-view></router-view>
     </main>
